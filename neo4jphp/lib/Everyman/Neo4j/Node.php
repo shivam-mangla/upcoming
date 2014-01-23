@@ -39,6 +39,7 @@ class Node extends PropertyContainer
 	 */
 	public function addLabels($labels)
 	{
+		echo "Labels called";
 		$this->labels = $this->client->addLabels($this, $labels);
 		return $this->labels;
 	}

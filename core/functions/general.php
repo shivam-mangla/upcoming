@@ -15,12 +15,12 @@ function logged_in_redirect(){
 }
 
 function array_sanitize(&$item){
-	$item = mysql_real_escape_string($item);
+	// $item = mysql_real_escape_string($item);
 	//it'll now sanitize the string
 }
 
 function sanitize($data){
-	return mysql_real_escape_string($data);
+	// return mysql_real_escape_string($data);
 	//it'll now sanitize the string
 }
 

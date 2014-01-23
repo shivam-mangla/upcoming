@@ -3,7 +3,9 @@
 use Everyman\Neo4j\Client,
     Everyman\Neo4j\Transport,
     Everyman\Neo4j\Node,
-    Everyman\Neo4j\Relationship;
+    Everyman\Neo4j\Relationship,
+    Everyman\Neo4j\Index;
+
 
 function change_password($user_id, $password){
 	$user_id = (int) $user_id;
@@ -32,12 +34,23 @@ function register_user($register_data){
 	$host = "localhost";
 	$port = 7474;
 	$client = new Client(new Transport($host, $port));
-
 	array_walk($register_data, 'array_sanitize');
 	$register_data['password'] = md5($register_data['password']);
-	$node = new Node($client);
-	$node->setProperties($register_data)->save();
 
+
+	$properties = "";
+
+	foreach($register_data as $x=>$x_value)
+	{
+		$properties .= $x .":'". $x_value ."', ";
+	}
+
+	$queryString = "CREATE (".$register_data['username']." :user { ".substr($properties,0,-2)." })";
+
+	echo $queryString;
+
+	$query = new Everyman\Neo4j\Cypher\Query($client, $queryString);
+	$result = $query->getResultSet();
 }
 
 
@@ -53,11 +66,17 @@ function email_exists($email){
 	//return true is showing the result.. there's something wrong with this query
 }
 
-function user_exists($username){
-	$username = sanitize($username);
-	$query = "SELECT COUNT(user_id) FROM  `group_users` WHERE  username = '$username'";
-    $result = mysql_query($query);
-    return (mysql_result($result, 0) == 1) ? true : false;
+function user_exists($email){
+	// $username = sanitize($username);
+
+	$host = "localhost";
+	$port = 7474;
+	$client = new Client(new Transport($host, $port));
+	$queryString = "START n = node(*) WHERE n.email = '".$email."' RETURN n";
+	$query = new Everyman\Neo4j\Cypher\Query($client, $queryString);
+	$result = $query->getResultSet();
+
+    return ($result != null) ? true : false;
 	//return true is showing the result.. there's something wrong with this query
 }
 
@@ -86,20 +105,19 @@ function user_id_from_username($username){
 	return mysql_result($result, 0, 'user_id');
 }
 
-function login($username, $password){
-	$user_id = user_id_from_username($username);
-	
-	//echo "userId=". $user_id;
+function login($email, $password){
 
-	$username = sanitize($username);
-	$password = md5($password);
 
-	$query = "SELECT COUNT(user_id) FROM  `group_users` WHERE  username = '$username' AND password = '$password'";
-    $result = mysql_query($query) or die($query."<br/><br/>".mysql_error());
-    
-	//$row = mysql_fetch_array($result);
-	//print_r($row);
-    
-	return (mysql_result($result, 0) == 1) ? $user_id : false;
+	$host = "localhost";
+	$port = 7474;
+	$client = new Client(new Transport($host, $port));
+	$queryString = "START n=node(*) WHERE n.email = '".$email. "' AND n.password = '".$password."' RETURN n";
+
+	echo $queryString."\n";
+
+	$query = new Everyman\Neo4j\Cypher\Query($client, $queryString);
+	$result = $query->getResultSet();
+
+    return ($result != null) ? 2: false;
 }
 ?>

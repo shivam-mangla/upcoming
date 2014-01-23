@@ -12,7 +12,7 @@ require 'database/connect.php';
 
 // //'require' means anything below this can use this connection
 
-// require 'functions/general.php';
+require 'functions/general.php';
 require 'functions/users.php';
 
 // require 'functions/expense_manager.php';
