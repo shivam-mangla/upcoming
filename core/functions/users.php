@@ -1,5 +1,10 @@
 <?php
 
+use Everyman\Neo4j\Client,
+    Everyman\Neo4j\Transport,
+    Everyman\Neo4j\Node,
+    Everyman\Neo4j\Relationship;
+
 function change_password($user_id, $password){
 	$user_id = (int) $user_id;
 	$password = md5 ($password);
@@ -22,17 +27,20 @@ function user_data($user_id){
 }
 
 function register_user($register_data){
+
+	$connect_error = 'Sorry, we\'re experienceing connection problems';
+	$host = "localhost";
+	$port = 7474;
+	$client = new Client(new Transport($host, $port));
+
 	array_walk($register_data, 'array_sanitize');
 	$register_data['password'] = md5($register_data['password']);
-	//print_r($register_data);
 
 	$fields = "" . implode (", ", array_keys($register_data)) . "";
 	$data = "'" . implode ("', '", $register_data) . "'";
 
-	//echo "INSERT INTO users ($fields) VALUES ($data)";
-	//die();
-
-	mysql_query("INSERT INTO group_users ($fields) VALUES ($data)");
+	$keanu = new Node($client);
+	$keanu->setProperty('name', $register_data['username'])->save();
 }
 
 

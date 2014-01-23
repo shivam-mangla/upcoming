@@ -2,14 +2,19 @@
 
 ob_start();
 session_start();
+ini_set('display_errors',1);
+ini_set('display_startup_errors',1);
 error_reporting(-1);
 
 //as we don't want to show any detailed reports to user
 require 'database/connect.php';
+
+
 // //'require' means anything below this can use this connection
 
 // require 'functions/general.php';
-// require 'functions/users.php';
+require 'functions/users.php';
+
 // require 'functions/expense_manager.php';
 
 // if(logged_in() === true){
