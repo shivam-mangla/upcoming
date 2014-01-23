@@ -35,12 +35,9 @@ function register_user($register_data){
 
 	array_walk($register_data, 'array_sanitize');
 	$register_data['password'] = md5($register_data['password']);
+	$node = new Node($client);
+	$node->setProperties($register_data)->save();
 
-	$fields = "" . implode (", ", array_keys($register_data)) . "";
-	$data = "'" . implode ("', '", $register_data) . "'";
-
-	$keanu = new Node($client);
-	$keanu->setProperty('name', $register_data['username'])->save();
 }
 
 
