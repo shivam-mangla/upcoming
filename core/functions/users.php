@@ -111,6 +111,7 @@ function login($email, $password){
 	$host = "localhost";
 	$port = 7474;
 	$client = new Client(new Transport($host, $port));
+	$password = md5($password);
 	$queryString = "START n=node(*) WHERE n.email = '".$email. "' AND n.password = '".$password."' RETURN n";
 
 	echo $queryString."\n";

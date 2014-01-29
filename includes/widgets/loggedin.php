@@ -1,130 +1,36 @@
 <?php
-if (isset($_POST['submitForm']))
-{
-	if ($_POST['step'] == 1) {		
-		$info = array(
-			'from' 	 => $user_data['username'],
-			'to' => $_POST['member'],
-			'amount' => $_POST['balance']
-		);
-		if(!user_exists( $_POST['member']))
-		{
-		?>
-		<script> alert("This user isn't registered in this group."); </script>
-		<?php
-		}else if($_POST['member'] === $user_data['username']){
-		?>
-		<script> alert("You can't give money to yourself."); </script>
-		<?php
-		}else if($_POST['balance'] < 0){
-		?>
-		<script> alert("You can't \"give\" a negative amount of money."); </script>
-		<?php
-		}else if($_POST['balance'] == 0){
-		?>
-		<script> alert("Null Transaction."); </script>
-		<?php
-		}
-		else{
-		//print_r($info);
-			add_entry($info);
-		}
-	}
 
-	if ($_POST['step'] == 2) {
-		$info = "empty";
-		compute_my_balance($info);
-	}
-	
-	if ($_POST['step'] == 3) {
-		delete_member($user_data['username']);
-		header('Location: logout.php');
-	}
+// to check if any data has been received on this page
+if (isset($_POST['Search']))
+{
+	// receive the text from query field
+	$name = $_POST['query'];
+
+	echo 'https://graph.facebook.com/search?q='.$name.'&type=event&center=29.8749,77.8899&distance=100&access_token=CAACEdEose0cBANObVZC5GZBigSgsUv2lPBx7HIUp65OmZBA6znd4sI0oYbf5N93VNkSBZCJ08SnnWmgliUi8gRXFAqqfZARAW3pvbWTNKfitZAWUbndSSxKZAFTtKSZAMxBeqOd25DlNDFKbnGukoTlr5xPw7c2M2F9SZCjC30HaYCZBypdrw28LASa5RHEFiv20MZD';
+	// fetch content from the entered url
+	$homepage = file_get_contents('https://graph.facebook.com/search?q='.$name.'&type=event&center=29.8749,77.8899&distance=100&access_token=CAACEdEose0cBAG8hbG9yHKlP7FXRjZA7Tr1b4NfhYFORuA1s2KqtCQFm3U9oZC8oINxRdkUjxggVtkFbN4F9twIjZBmxXXwRgIkACqjQzZAZAYeIvMAIt2qlWv44GkRlLJeKAhFWjU3mjtxj1WZCZAYmam0mGlsJeMc5TFV2ZBzjfpIs3bAFsFoCTnJIsQGQye4ZD');
+	$ll = json_decode($homepage);
+	print_r($ll);
 }
+else{
 ?>
-<!--
-<script>
-function delete_account()
-{
-	alert("Are you sure?");
-	//delete_member($user_data['username']);
-	<?php
-	//header('Location: logout.php');
-	?>
-}
-</script>
 
--->
-
-<link href="http://static.scripting.com/github/bootstrap2/css/bootstrap.css" rel="stylesheet">
-<script src="http://static.scripting.com/github/bootstrap2/js/jquery.js"></script>
-<script src="http://static.scripting.com/github/bootstrap2/js/bootstrap-transition.js"></script>
-<script src="http://static.scripting.com/github/bootstrap2/js/bootstrap-modal.js"></script>
-
-<script>
-	$(document).ready(function() {
-		$('#windowTitleDialog').bind('show', function () {
-			document.getElementById ("xlInput").value = document.title;
-			});
-		});
-	function closeDialog () {
-		$('#windowTitleDialog').modal('hide'); 
-		};
-	function okClicked () {
-		document.title = document.getElementById ("xlInput").value;
-		closeDialog ();
-		};
-</script>
+<script type="text/javascript" src="search_autocomplete.js"></script>
+<body onload="initialize();">
 
 <div class="container">
 
 	<div class="form-signin">
-		  <form  action="" method="POST">
-			<h2 class="form-signin-heading">Add a transaction</h2>
-			<input type="text" class="input-block-level" name="member" placeholder="Member to whom you gave money?">
-			<input type="text" class="input-block-level" name="balance" placeholder="How much money did you give?">
-			<input type="hidden" name="step" value="1" />
-			<button class="btn btn-large btn-primary" type="submit" name="submitForm">Add Entry</button>
-		  </form>
-
-			<p style="font-size:1.3em;">Calculate minimum no. of transactions required for settlement.</p>
-		  	
-			<div class="divButtons">
-				<a data-toggle="modal" href="#windowTitleDialog" class="btn btn-primary btn-large">Calculate</a>
+		<form  action="" method="POST" value="Search">
+			<div id="locationField">
+				<input id="autocomplete" type="text" class="input-block-level" name="query" placeholder="Place" onFocus="geolocate()" >
 			</div>
-	  </div>
-	  <div class="form-signin">
-
-			<form action="" style="float:center;" method="POST">
-				<input type="hidden" name="step" value="3" />
-				<button class="btn btn-large btn-primary" type="Submit" name="submitForm">Delete Account</button>
-			</form>
-		<div class="divButtons">
-			<a  href="changepassword.php" class="btn btn-primary btn-large">Change Password</a>
-			<a  href="logout.php" class="btn btn-primary btn-large">Log Out</a>
-		</div>
-		
-		<div id="windowTitleDialog" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="windowTitleLabel" aria-hidden="true">
-			<div class="modal-header">
-				<a href="#" class="close" data-dismiss="modal">&times;</a>
-				<h3>Minimum no. of transactions required are as follows:</h3>
-			</div>
-			
-			<div class="modal-body">
-				<div class="divDialogElements">
-					<input class="xlarge" id="xlInput" name="xlInput" type="hidden" />
-					<p style="font-family:Arial Black;">
-					<?php 
-					compute_my_balance("none");
-					?>
-					</p>
-				</div>
-			</div>
-			
-			<div class="modal-footer">
-				<a href="#" class="btn btn-primary" onclick="closeDialog();">OK</a>
-			</div>
-		</div>
-				
+			<button class="btn btn-large btn-primary" type="submit" name="Search">Search</button>
+		</form>
 	</div>
+
 </div>
+
+<?php
+}
+?>
