@@ -22,7 +22,7 @@ require 'functions/users.php';
 
 // 	//echo $session_user_id;
 
-// 	$user_data = user_data($session_user_id);	
+// 	// $user_data = user_data($session_user_id);	
 
 // 	/*
 // 	if(user_active($user_data['username']) === false){

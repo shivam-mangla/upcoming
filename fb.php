@@ -1,3 +1,18 @@
+<?php
+  require_once('facebook-php-sdk/src/facebook.php');
+
+  $config = array(
+    'appId' => '619997438036056',
+    'secret' => 'a09b3144f62ede1e36d1c94436553411',
+    'allowSignedRequest' => false // optional but should be set to false for non-canvas apps
+  );
+
+
+  $facebook = new Facebook($config);
+  echo "access token". $facebook->getAccessToken();
+  
+?>
+
 <html>
 <head></head>
 <body>
