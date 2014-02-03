@@ -1,16 +1,12 @@
 <?php
   require_once('facebook-php-sdk/src/facebook.php');
-
-  $config = array(
-    'appId' => '619997438036056',
-    'secret' => 'a09b3144f62ede1e36d1c94436553411',
-    'allowSignedRequest' => false // optional but should be set to false for non-canvas apps
-  );
+  require_once('config.php');
 
 
-  $facebook = new Facebook($config);
-  echo "access token". $facebook->getAccessToken();
-  
+  // $facebook = new Facebook($config);
+  // echo "access token<br>". $facebook->getAccessToken();
+   // echo "access token<br> $access_token";
+
 ?>
 
 <html>
@@ -33,13 +29,32 @@
   // for any authentication related change, such as login, logout or session refresh. This means that
   // whenever someone who was previously logged out tries to log in again, the correct case below 
   // will be handled. 
-  FB.Event.subscribe('auth.authResponseChange', function(response) {
+  FB.Event.subscribe('auth.authResponseChange', FB.getLoginStatus(function(response) {
     // Here we specify what we do with the response anytime this event occurs. 
     if (response.status === 'connected') {
       // The response object is returned with a status field that lets the app know the current
       // login status of the person. In this case, we're handling the situation where they 
       // have logged in to the app.
+      var uid = response.authResponse.userID;
+       accessToken = response.authResponse.accessToken;
+      console.log(uid)
+      console.log(accessToken)
       testAPI();
+      // window.location.href = "loggedin.php?token=" + accessToken;
+      function {
+        $.ajax({
+        type: "GET",
+        url: "loggedin.php",
+        data:{accessToken : accessToken},
+        success: function() {
+            console.log( "trying",accessToken )
+        }
+      })
+      
+      };
+
+      
+       console.log("hi")
     } else if (response.status === 'not_authorized') {
       // In this case, the person is logged into Facebook, but not into the app, so we call
       // FB.login() to prompt them to do so. 
@@ -57,7 +72,7 @@
       // The same caveats as above apply to the FB.login() call here.
       FB.login();
     }
-  });
+  }));
   };
 
   // Load the SDK asynchronously
@@ -78,6 +93,17 @@
     });
   }
 </script>
+
+
+<!-- Script to get the extended token -->
+<?php
+if (isset($_GET['accessToken']))
+{
+$token = $_GET['accessToken'];
+$exchangeToken = "https://graph.facebook.com/oauth/access_token?grant_type=fb_exchange_token&client_id=".$config['appId']."&client_secret=".$config['secret']."&fb_exchange_token=".$token;
+}
+?>
+
 
 <!--
   Below we include the Login Button social plugin. This button uses the JavaScript SDK to
