@@ -10,7 +10,7 @@
     cookie     : true, // enable cookies to allow the server to access the session
     xfbml      : true  // parse XFBML
   });
-
+  // "text/javascript">
   // Here we subscribe to the auth.authResponseChange JavaScript event. This event is fired
   // for any authentication related change, such as login, logout or session refresh. This means that
   // whenever someone who was previously logged out tries to log in again, the correct case below 
@@ -19,7 +19,8 @@
 		FB.logout(function(response) {
 		        // Person is now logged out
 		        console.log("should log out");
-		        console.log(response);
+            console.log(response);
+		        console.log(response.status);
 		    });
 	});
   };
