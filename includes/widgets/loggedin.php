@@ -1,16 +1,27 @@
 <?php
-
+include 'fb.php';
 // to check if any data has been received on this page
 if (isset($_POST['Search']))
 {
 	// receive the text from query field
 	$name = $_POST['query'];
+		if (isset($_GET['accessToken'])){
+		$token = $_GET['accessToken'];
 
-	echo 'https://graph.facebook.com/search?q='.$name.'&type=event&center=29.8749,77.8899&distance=100&access_token=CAACEdEose0cBANObVZC5GZBigSgsUv2lPBx7HIUp65OmZBA6znd4sI0oYbf5N93VNkSBZCJ08SnnWmgliUi8gRXFAqqfZARAW3pvbWTNKfitZAWUbndSSxKZAFTtKSZAMxBeqOd25DlNDFKbnGukoTlr5xPw7c2M2F9SZCjC30HaYCZBypdrw28LASa5RHEFiv20MZD';
+		$url = 'https://graph.facebook.com/search?q='.$name.'&type=event&distance=100&access_token='.$token.'';
+		echo "Hi".$token."<br>";
+		};
+	echo $url;
+	$url = preg_replace("/ /", "%20", $url);
 	// fetch content from the entered url
-	$homepage = file_get_contents('https://graph.facebook.com/search?q='.$name.'&type=event&center=29.8749,77.8899&distance=100&access_token=CAACEdEose0cBAG8hbG9yHKlP7FXRjZA7Tr1b4NfhYFORuA1s2KqtCQFm3U9oZC8oINxRdkUjxggVtkFbN4F9twIjZBmxXXwRgIkACqjQzZAZAYeIvMAIt2qlWv44GkRlLJeKAhFWjU3mjtxj1WZCZAYmam0mGlsJeMc5TFV2ZBzjfpIs3bAFsFoCTnJIsQGQye4ZD');
-	$ll = json_decode($homepage);
-	print_r($ll);
+	// $homepage = file_get_contents($url);
+	// $ll = json_decode($homepage);
+	// print_r($ll);
+	$ch = curl_init();
+	curl_setopt($ch, CURLOPT_URL, $url);
+	curl_setopt($ch, CURLOPT_HEADER, 0);
+	curl_exec($ch);
+	curl_close($ch);
 }
 else{
 ?>
@@ -21,7 +32,7 @@ else{
 <div class="container">
 
 	<div class="form-signin">
-		<form  action="" method="POST" value="Search">
+		<form  action="<? echo $_SERVER['PHP_SELF'] ?>" method="POST" value="Search">
 			<div id="locationField">
 				<input id="autocomplete" type="text" class="input-block-level" name="query" placeholder="Place" onFocus="geolocate()" >
 			</div>
