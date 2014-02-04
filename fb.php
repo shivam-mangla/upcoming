@@ -3,9 +3,10 @@
   require_once('config.php');
 
 
-  // $facebook = new Facebook($config);
-  // echo "access token<br>". $facebook->getAccessToken();
+  $facebook = new Facebook($config);
+  echo "access token<br>". $facebook->getAccessToken()."<br>Used fb.php for this^";
    // echo "access token<br> $access_token";
+   $a_token = $facebook->getAccessToken();
 
 ?>
 
@@ -41,17 +42,17 @@
       console.log(accessToken)
       testAPI();
       // window.location.href = "loggedin.php?token=" + accessToken;
-      function {
+      
         $.ajax({
-        type: "GET",
-        url: "loggedin.php",
-        data:{accessToken : accessToken},
+        type: "POST",
+        url: "index.php",
+        data:{'accessToken' : accessToken},
         success: function() {
             console.log( "trying",accessToken )
         }
       })
       
-      };
+      
 
       
        console.log("hi")
@@ -97,9 +98,10 @@
 
 <!-- Script to get the extended token -->
 <?php
-if (isset($_GET['accessToken']))
+if (isset($_POST['accessToken']))
 {
-$token = $_GET['accessToken'];
+  echo "hknknni";
+$token = $_POST['accessToken'];
 $exchangeToken = "https://graph.facebook.com/oauth/access_token?grant_type=fb_exchange_token&client_id=".$config['appId']."&client_secret=".$config['secret']."&fb_exchange_token=".$token;
 }
 ?>
