@@ -1,16 +1,22 @@
 <?php
 include 'fb.php';
+
+var_dump($_POST);
+
 // to check if any data has been received on this page
 if (isset($_POST['Search']))
 {
 	// receive the text from query field
 	$name = $_POST['query'];
-		if (isset($_GET['accessToken'])){
-		$token = $_GET['accessToken'];
+		$url="werwe";
+	 $token = $a_token;
+	 echo "using loggedin.php".$token;
+			// if (isset($_POST['accessToken'])){
+		// $token = $_POST['accessToken'];
 
 		$url = 'https://graph.facebook.com/search?q='.$name.'&type=event&distance=100&access_token='.$token.'';
-		echo "Hi".$token."<br>";
-		};
+		echo "<br>Hi".$token."<br>";
+		// };
 	echo $url;
 	$url = preg_replace("/ /", "%20", $url);
 	// fetch content from the entered url
