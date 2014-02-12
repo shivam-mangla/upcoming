@@ -1,12 +1,5 @@
 <?php
 
-use Everyman\Neo4j\Client,
-    Everyman\Neo4j\Transport,
-    Everyman\Neo4j\Node,
-    Everyman\Neo4j\Relationship,
-    Everyman\Neo4j\Index;
-
-
 function suggest_time($preferences){
 	var_dump($preferences);
 
@@ -27,7 +20,15 @@ function suggest_time($preferences){
 	**/
 }
 
-function get_event_list($url){
+function get_event_list($name){
+	global $config;
+	$tconfig = $config;
+	global $access_token;
+	$token = $access_token;
+	// echo "using loggedin.php".$token;
+	$url = 'https://graph.facebook.com/search?q='.$name.'&type=event&distance=100&access_token='.$token.'';
+	// echo $url;
+	$url = preg_replace("/ /", "%20", $url);
 	$ch = curl_init();
 	curl_setopt($ch, CURLOPT_URL, $url);
 	curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
