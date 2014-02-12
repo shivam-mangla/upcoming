@@ -38,6 +38,7 @@ require 'config.php';
 
 require 'functions/general.php';
 require 'functions/users.php';
+require 'functions/events.php';
 
 // require 'functions/expense_manager.php';
 
