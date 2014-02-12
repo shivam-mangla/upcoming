@@ -8,25 +8,10 @@ if (isset($_POST['Search']))
 {
 	// receive the text from query field
 	$name = $_POST['query'];
-		$url="werwe";
-	 $token = $a_token;
-	 echo "using loggedin.php".$token;
-			// if (isset($_POST['accessToken'])){
-		// $token = $_POST['accessToken'];
-
-		$url = 'https://graph.facebook.com/search?q='.$name.'&type=event&distance=100&access_token='.$token.'';
-		echo "<br>Hi".$token."<br>";
-		// };
-	// echo $url;
-	$url = preg_replace("/ /", "%20", $url);
-	// fetch content from the entered url
-	// $homepage = file_get_contents($url);
-	// $ll = json_decode($homepage);
-	// print_r($ll);
 	?>
 	<div id="results">
 	<?
-		$result = get_event_list($url);
+		$result = get_event_list($name);
 	?>
 	</div>
 	<div id="output"></div>
