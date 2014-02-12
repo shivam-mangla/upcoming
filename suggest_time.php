@@ -6,6 +6,11 @@ include 'core/init.php';
 include 'includes/overall/overallheader.php';
 // logged_in_redirect();
 ?>
+
+
+<script type="text/javascript" src="js/search_autocomplete.js"></script>
+<body onload="initialize();">
+
 <div class="container">
 <?php
 if(isset($_GET['success']) && empty($_GET['success'])){
@@ -19,12 +24,10 @@ if(isset($_GET['success']) && empty($_GET['success'])){
 }
 
 else{ //This else goes till end
-//echo "FINALLY POSTED";
 
-echo "got the info".empty($_POST).empty($errors);
-if(empty($_POST) === false && empty($errors) === true){
-echo "POSTED";
+	if(empty($_POST) === false && empty($errors) === true){
 	$preferences = array(
+		'location' 		=> 	$_POST['location'],
 		'sdate' 		=> 	$_POST['sdate'],
 		'edate' 		=> 	$_POST['edate'],
 		'stime' 		=> 	$_POST['stime'],
@@ -32,15 +35,11 @@ echo "POSTED";
 		'time_span' 	=> 	$_POST['time_span']
 	);
 
-	echo "should register now";
 	print_r($preferences);
 	suggest_time($preferences);
-	// register_user($register_data);
-	//redirect properly
-
-	echo "registeredddd";
 
 	//header('Location: suggest_time.php?success');
+
 	exit();
 }else if(empty($errors) === false){
 	echo output_errors($errors);
@@ -53,6 +52,8 @@ echo "POSTED";
       <form class="form-signin" action="" method="POST">
         <h2 class="form-signin-heading">Get suggestion for events' timing</h2>
 
+        Location:
+        <input id = "autocomplete" type="text" class="input-block-level" name="location" placeholder="Location">
         Starting Date:
         <input type="date" class="input-block-level" name="sdate" placeholder="Starting Date">
         Ending Date:
