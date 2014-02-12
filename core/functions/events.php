@@ -21,13 +21,8 @@ function suggest_time($preferences){
 }
 
 function get_event_list($name){
-	global $config;
-	$tconfig = $config;
-	global $access_token;
-	$token = $access_token;
-	// echo "using loggedin.php".$token;
-	$url = 'https://graph.facebook.com/search?q='.$name.'&type=event&distance=100&access_token='.$token.'';
-	// echo $url;
+
+	$url = 'https://graph.facebook.com/search?q='.$name.'&type=event&distance=100&access_token='.$GLOBALS['access_token'].'';
 	$url = preg_replace("/ /", "%20", $url);
 	$ch = curl_init();
 	curl_setopt($ch, CURLOPT_URL, $url);
