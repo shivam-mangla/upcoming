@@ -1,13 +1,7 @@
 <?php
-  require_once('facebook-php-sdk/src/facebook.php');
   require_once('config.php');
-
-
-  $facebook = new Facebook($config);
-  echo "access token<br>". $facebook->getAccessToken()."<br>Used fb.php for this^";
-   // echo "access token<br> $access_token";
-   $a_token = $facebook->getAccessToken();
-
+  global $config;
+  $config = $config;
 ?>
 
 <html>
@@ -100,9 +94,9 @@
 <?php
 if (isset($_POST['accessToken']))
 {
-  echo "hknknni";
-$token = $_POST['accessToken'];
-$exchangeToken = "https://graph.facebook.com/oauth/access_token?grant_type=fb_exchange_token&client_id=".$config['appId']."&client_secret=".$config['secret']."&fb_exchange_token=".$token;
+  // echo "hknknni";
+  $token = $_POST['accessToken'];
+  $exchangeToken = "https://graph.facebook.com/oauth/access_token?grant_type=fb_exchange_token&client_id=".$config['appId']."&client_secret=".$config['secret']."&fb_exchange_token=".$token;
 }
 ?>
 
