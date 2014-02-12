@@ -26,13 +26,7 @@ if (isset($_POST['Search']))
 	?>
 	<div id="results">
 	<?
-	$ch = curl_init();
-	curl_setopt($ch, CURLOPT_URL, $url);
-	curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-	curl_setopt($ch, CURLOPT_HEADER, 0);
-	$result = curl_exec($ch);
-	// echo "<br><br><br>Result is<br>".$result;
-	curl_close($ch);
+		$result = get_event_list($url);
 	?>
 	</div>
 	<div id="output"></div>
@@ -40,11 +34,9 @@ if (isset($_POST['Search']))
 		// var object = JSON.parse(<?php echo $result;?>);
 		var object = (<?=$result;?>);
 		for (var i = 0; i < object.data.length; i++) {
- 	   	var counter = object.data[i];
-    	//console.log(counter.counter_name);
-    	
-    	// document
-}
+	 	   	var counter = object.data[i];
+	    	console.log(counter.name);
+    	}
 	</script>
 	<?
 }
