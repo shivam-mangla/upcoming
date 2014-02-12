@@ -17,18 +17,38 @@ if (isset($_POST['Search']))
 		$url = 'https://graph.facebook.com/search?q='.$name.'&type=event&distance=100&access_token='.$token.'';
 		echo "<br>Hi".$token."<br>";
 		// };
-	echo $url;
+	// echo $url;
 	$url = preg_replace("/ /", "%20", $url);
 	// fetch content from the entered url
 	// $homepage = file_get_contents($url);
 	// $ll = json_decode($homepage);
 	// print_r($ll);
+	?>
+	<div id="results">
+	<?
 	$ch = curl_init();
 	curl_setopt($ch, CURLOPT_URL, $url);
+	curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 	curl_setopt($ch, CURLOPT_HEADER, 0);
-	curl_exec($ch);
+	$result = curl_exec($ch);
+	// echo "<br><br><br>Result is<br>".$result;
 	curl_close($ch);
+	?>
+	</div>
+	<div id="output"></div>
+	<script type="text/javascript">
+		// var object = JSON.parse(<?php echo $result;?>);
+		var object = (<?=$result;?>);
+		for (var i = 0; i < object.data.length; i++) {
+ 	   	var counter = object.data[i];
+    	//console.log(counter.counter_name);
+    	
+    	// document
 }
+	</script>
+	<?
+}
+
 else{
 ?>
 
