@@ -29,7 +29,7 @@ if (isset($_POST['Search']))
 else{
 ?>
 
-<script type="text/javascript" src="search_autocomplete.js"></script>
+<script type="text/javascript" src="js/search_autocomplete.js"></script>
 <body onload="initialize();">
 
 <div class="container">
