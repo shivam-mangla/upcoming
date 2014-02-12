@@ -1,5 +1,18 @@
 <?php
 
+/**
+ * get_time_difference
+ *
+ * @param   string  start time
+ * @param   string  finish time
+ * @return  int     time difference in minutes, rounded up
+ */
+function get_time_difference($start, $finish)
+{
+        return ceil(abs((strtotime($finish) - strtotime($start)) / 60));
+}
+
+
 function protect_page(){
 	if(logged_in() == false){
 		header('Location: index.php');
