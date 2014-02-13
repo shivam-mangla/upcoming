@@ -12,6 +12,7 @@ if (isset($_POST['Search']))
 	<div id="results">
 	<?
 		$result = get_event_list($name);
+		echo $result;
 	?>
 	</div>
 	<div id="output"></div>
