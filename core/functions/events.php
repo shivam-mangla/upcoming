@@ -67,19 +67,66 @@ function suggest_time($preferences){
 	else echo "\$json['results'] is not an array";
 
 
-        foreach($json['data'] as $result) {
-        	var_dump($result);
-        }
+    // Look for a better algorithm later but nothing better can be thought of as of now
+    for($i=0; $i<sizeof($attendees); $i++){
+
+    	echo $attendees[$i]."  ";
+    }
+
+    echo "<br/>";
+    echo str_repeat('&nbsp;', 19);
 
 	// find the time window which has minimum number of attendees and suggest that time
+    $n = sizeof($attendees);
+   	$m = 8; // number_of_hours_for_which_event_will_last * 4... because 1 array element represents 15 minutes
+   	$max_attendees = array_fill(0, $n-$m+1, 0);
+    
+   	// find maximum of 1st m elements
+   	for($j=0; $j<$m; $j++)
+	{
+		if($max_attendees[0] < $attendees[$j]){
+			$max_attendees[0] = $attendees[$j];
+		}
+	}
+
+	echo $max_attendees[0]."  ";
+
+    /**
+     Look for a better algorithm later but nothing better can be thought of as of now
+    */
 	
+	// Find maximum attendees for all windows using number of attendees per window
+    // Assumption: Attendees will exclusively attend only one event
+    // So, if attendees are busy in some other event even for 15 minutes then they can't attend the event being created
+    // Therefore, the best time to organize an event will be the minimum of the consecutive maximums
+    // i.e. the time when minimum no. of attendees are going for other events
+    for($i=1; $i<sizeof($attendees)-$m+1; $i++){
+
+    	if($max_attendees[$i-1] === $attendees[$i-1])
+    	{
+	    	for($j=$i; $j<$i+$m; $j++)
+	    	{
+	    		if($max_attendees[$i] < $attendees[$j]){
+					$max_attendees[$i] = $attendees[$j];
+				}
+	    	}
+    	}else{
+    		$max_attendees[$i] = $max_attendees[$i-1];
+    	}
+    	echo $max_attendees[$i]."  ";
+    }
 
 
-
-	/** TO-DO
+	/** 
+		TO-DO
 		1. Generally user time preferences will be good enough to select non-working hours for the events
 		but after some time it can be taken care of.
 		2. Take into account the preference for events of same type
+		3. In last step when finding final time window:
+			Using this algorithm if say the expected duration of an event is 2 hours and there are two choices
+			(i) With very few attendees for 1.5 hours (in start or in end or both.. basically they can attend most of the event but not all of it) and then many of them going in some other event before/after this event
+			(ii) With minimum number of attendees if the whole duration has to be attended.
+			Which one should be chosen? 
 	**/
 }
 
