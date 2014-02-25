@@ -12,16 +12,23 @@ if (isset($_POST['Search']))
 	<div id="results">
 	<?
 		$result = get_event_list($name);
-		echo $result;
+		// echo $result;
 	?>
 	</div>
 	<div id="output"></div>
 	<script type="text/javascript">
 		// var object = JSON.parse(<?php echo $result;?>);
+		var frame = document.getElementById('results');
 		var object = (<?=$result;?>);
 		for (var i = 0; i < object.data.length; i++) {
 	 	   	var counter = object.data[i];
-	    	console.log(counter.name);
+	    	// console.log(counter.name);
+	    	// frame.innerHTML('counter.name');
+	    	for (var i = 0; i < object.data.length; i++)
+	    	{
+	    		var counter = object.data[i];
+	    		$('body').append(counter.name+'<br>');
+	    	}
     	}
 	</script>
 	<?
@@ -43,7 +50,7 @@ else{
 			<button class="btn btn-large btn-primary" type="submit" name="Search">Search</button>
 		</form>
 	</div>
-
+<div id = "results"></div>
 </div>
 
 <?php
