@@ -15,20 +15,33 @@ if (isset($_POST['Search']))
 		// echo $result;
 	?>
 	</div>
-	<div id="output"></div>
+	<div id = "display-output"></div>
+
+	
 	<script type="text/javascript">
 		// var object = JSON.parse(<?php echo $result;?>);
-		var frame = document.getElementById('results');
+
+		
 		var object = (<?=$result;?>);
-		for (var i = 0; i < object.data.length; i++) {
+		for (var i = 0; i < object.data.length; i++)
+		{
 	 	   	var counter = object.data[i];
 	    	// console.log(counter.name);
 	    	// frame.innerHTML('counter.name');
-	    	for (var i = 0; i < object.data.length; i++)
-	    	{
-	    		var counter = object.data[i];
-	    		$('body').append(counter.name+'<br>');
-	    	}
+    	}
+    	
+    	var frame = document.getElementById('display-output');
+    	for (var i = 0; i < object.data.length; i++)
+    	{
+    		var counter = object.data[i];
+    		var div = document.createElement("div");
+    		div.className = "event-details"
+    		div.innerHTML = "Name:" +(counter.name) +"<br>Location:" + (counter.location) + "<br>Start time:" + (counter.start_time);
+    		// div.innerHTML = div.innerHTML + (counter.location) +(counter.start_time);
+    		// div.innerHTML = (counter.start_time);
+    		// div.innerHTML = (counter.end_time);
+    		// div.innerHTML = (counter.location);
+    		frame.appendChild(div);
     	}
 	</script>
 	<?
@@ -50,7 +63,6 @@ else{
 			<button class="btn btn-large btn-primary" type="submit" name="Search">Search</button>
 		</form>
 	</div>
-<div id = "results"></div>
 </div>
 
 <?php
