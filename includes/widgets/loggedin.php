@@ -1,3 +1,4 @@
+<link rel="stylesheet" type="text/css" href="css/events.css">
 <?php
 include 'fb.php';
 
@@ -15,8 +16,9 @@ if (isset($_POST['Search']))
 		// echo $result;
 	?>
 	</div>
-	<div id = "display-output"></div>
-
+	<div class="section group">
+		<div id = "display-output"></div>
+	</div>
 	
 	<script type="text/javascript">
 		// var object = JSON.parse(<?php echo $result;?>);
@@ -35,8 +37,8 @@ if (isset($_POST['Search']))
     	{
     		var counter = object.data[i];
     		var div = document.createElement("div");
-    		div.className = "event-details"
-    		div.innerHTML = "Name:" +(counter.name) +"<br>Location:" + (counter.location) + "<br>Start time:" + (counter.start_time);
+    		div.className = "event-details col span_1_of_3 "
+    		div.innerHTML = "Name:" +(counter.name) +"<br><br>Location:" + (counter.location) + "<br><br>Start time:" + (counter.start_time);
     		// div.innerHTML = div.innerHTML + (counter.location) +(counter.start_time);
     		// div.innerHTML = (counter.start_time);
     		// div.innerHTML = (counter.end_time);
@@ -68,3 +70,12 @@ else{
 <?php
 }
 ?>
+<script src="js/masonry.pkgd.min.js"></script>
+// <script>
+// var container = document.querySelector('#container1');
+// var msnry = new Masonry( container, {
+//   // options...
+//   itemSelector: '.item',
+//   columnWidth: 200
+// });
+// </script>
