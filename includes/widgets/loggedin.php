@@ -15,7 +15,34 @@ if (isset($_POST['Search']))
 		$result = get_event_list($name);
 		// echo $result;
 		$obj = json_decode($result, true); //parsing json in php
-		print_r($obj);
+		// print_r($obj);
+		
+
+		// usort($obj, function($a, $b) {
+		//    //return strtotime($a['start_time']) - strtotime($b['start_time']);
+		//    return strcmp($a['data']['start_time'], $b['data']['start_time']);
+		// });
+		// // print_r($obj);
+
+
+
+
+
+
+
+		function cmp($a, $b) {
+			if ($a['start_time'] == $b['start_time']) {
+				return 0;
+			}
+			return ($a['start_time'] < $b['start_time']) ? -1 : 1;
+		}
+
+		uasort($obj['data'], 'cmp');
+print_r($obj);
+
+
+
+
 	?>
 	</div>
 	<button onclick="custom_sort()">Sort by date</button>
