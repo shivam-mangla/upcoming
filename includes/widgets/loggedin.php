@@ -14,8 +14,13 @@ if (isset($_POST['Search']))
 	<?
 		$result = get_event_list($name);
 		// echo $result;
+		$obj = json_decode($result, true); //parsing json in php
+		print_r($obj);
 	?>
 	</div>
+	<button onclick="custom_sort()">Sort by date</button>
+
+
 	<div class="section group">
 		<div id = "display-output"></div>
 	</div>
@@ -45,7 +50,10 @@ if (isset($_POST['Search']))
     		// div.innerHTML = (counter.location);
     		frame.appendChild(div);
     	}
+
+    	
 	</script>
+
 	<?
 }
 
