@@ -11,59 +11,29 @@ if (isset($_POST['Search']))
 	$name = $_POST['query'];
 	?>
 	<div id="results">
-	<?
-		$result = get_event_list($name);
-		// echo $result;
-		$obj = json_decode($result, true); //parsing json in php
-		// print_r($obj);
-		
-
-		// usort($obj, function($a, $b) {
-		//    //return strtotime($a['start_time']) - strtotime($b['start_time']);
-		//    return strcmp($a['data']['start_time'], $b['data']['start_time']);
-		// });
-		// // print_r($obj);
-
-
-
-
-
-
-
-		function cmp($a, $b) {
-			if ($a['start_time'] == $b['start_time']) {
-				return 0;
+		<?
+			$result = get_event_list($name);
+			// echo $result;
+			$obj = json_decode($result, true); //parsing json in php
+			function cmp($a, $b)
+			{
+				if ($a['start_time'] == $b['start_time'])
+				{
+					return 0;
+				}
+				return ($a['start_time'] < $b['start_time']) ? -1 : 1;
 			}
-			return ($a['start_time'] < $b['start_time']) ? -1 : 1;
-		}
-
-		uasort($obj['data'], 'cmp');
-print_r($obj);
-
-
-
-
-	?>
+			uasort($obj['data'], 'cmp');
+			print_r($obj);
+		?>
 	</div>
 	<button onclick="custom_sort()">Sort by date</button>
-
-
 	<div class="section group">
 		<div id = "display-output"></div>
 	</div>
 	
 	<script type="text/javascript">
-		// var object = JSON.parse(<?php echo $result;?>);
-
-		
 		var object = (<?=$result;?>);
-		for (var i = 0; i < object.data.length; i++)
-		{
-	 	   	var counter = object.data[i];
-	    	// console.log(counter.name);
-	    	// frame.innerHTML('counter.name');
-    	}
-    	
     	var frame = document.getElementById('display-output');
     	for (var i = 0; i < object.data.length; i++)
     	{
@@ -71,14 +41,8 @@ print_r($obj);
     		var div = document.createElement("div");
     		div.className = "event-details col span_1_of_3 "
     		div.innerHTML = "Name:" +(counter.name) +"<br><br>Location:" + (counter.location) + "<br><br>Start time:" + (counter.start_time);
-    		// div.innerHTML = div.innerHTML + (counter.location) +(counter.start_time);
-    		// div.innerHTML = (counter.start_time);
-    		// div.innerHTML = (counter.end_time);
-    		// div.innerHTML = (counter.location);
     		frame.appendChild(div);
     	}
-
-    	
 	</script>
 
 	<?
