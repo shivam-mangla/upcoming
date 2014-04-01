@@ -52,19 +52,40 @@ else{ //This else goes till end
       <form class="form-signin" action="" method="POST">
         <h2 class="form-signin-heading">Get suggestion for events' timing</h2>
 
-        Location:
-        <input id = "autocomplete" type="text" class="input-block-level" name="location" placeholder="Location">
-        Starting Date:
-        <input type="date" class="input-block-level" name="sdate" placeholder="Starting Date">
-        Ending Date:
-        <input type="date" class="input-block-level" name="edate" placeholder="Ending Date">
-        Starting Time:
-        <input type="time" class="input-block-level" name="stime" placeholder="Starting Time">
-        Ending Time:
-        <input type="time" class="input-block-level" name="etime" placeholder="Ending Time">
-        Event Time:
-        <input type="time" class="input-block-level" name="time_span" placeholder="Time Span">
-        <button class="btn btn-large btn-primary" type="submit" value="suggest">Suggest best time</button>
+		Location:
+		<input id = "autocomplete" type="text" class="input-block-level" name="location" placeholder="Location">
+		Starting Date:
+		<input type="date" class="input-block-level" name="sdate" placeholder="Starting Date">
+		Ending Date:
+		<input type="date" class="input-block-level" name="edate" placeholder="Ending Date">
+		Starting Time:
+		<input type="time" class="input-block-level" name="stime" placeholder="Starting Time">
+		Ending Time:
+		<input type="time" class="input-block-level" name="etime" placeholder="Ending Time">
+		Event Time:
+		<input type="time" class="input-block-level" name="time_span" placeholder="Time Span">
+		Categories:
+        <label class="checkbox-inline">
+			<input type="checkbox" id="workshop" value="workshop">Workshop
+		</label>
+		<label class="checkbox-inline">
+			<input type="checkbox" id="concert" value="concert">Concert
+		</label>
+		<label class="checkbox-inline">
+			<input type="checkbox" id="festival" value="festival">Festival
+		</label>
+		<label class="checkbox-inline">
+			<input type="checkbox" id="exhibition" value="exhibition">Exhibition
+		</label>
+		<label class="checkbox-inline">
+			<input type="checkbox" id="hackathon" value="hackathon">Hackathon
+		</label>
+		<label class="checkbox-inline">
+			<input type="checkbox" id="competition" value="competition">Competition
+		</label>
+		Event Description:
+		<textarea class="span4" id="description" name="description" rows="6" placeholder="Descibe the event"></textarea>
+        <button class="btn btn-large btn-primary" type="submit" value="suggest">Submit</button>
       </form>
     <script src="js/jquery.js"></script>
 
