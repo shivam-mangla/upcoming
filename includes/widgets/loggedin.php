@@ -36,23 +36,12 @@ if (isset($_POST['Search']))
 				print_r($item);
 				echo "<br>";
 			}
-
-
-
-
 			$tempArray = array_merge($obj);	//Changing the indices of the array back to 0,1,2...
 			// print_r($tempArray);
 			for ($i=0; $i < count($obj['data']) ; $i++) 
 			{ 
 				// echo "<div class='event-details col span_1_of_3'>Name:".$tempArray['data'][$i]['name']."<br>Location:".$tempArray['data'][$i]['location']."<br>Start time:".$tempArray['data'][$i]['start_time']."<br><br></div>";
 			}
-
-
-			
-
-
-
-
 		?>
 	</div>
 	
@@ -77,20 +66,7 @@ if (isset($_POST['Search']))
 				// frame.appendChild(div);
 			}
 		);
-		// simpleSearch.addEventListener("click",show_events());
-		// function show_events()
-		// {
-			for (var i = 0; i < object.data.length; i++)
-			{
-				// var counter = object.data[i];
-				// var div = document.createElement("div");
-				// div.className = "event-details col span_1_of_3 "
-				// div.innerHTML = "Name:" +(counter.name) +"<br><br>Location:" + (counter.location) + "<br><br>Start time:" + (counter.start_time);
-				// frame.appendChild(div);
-			}
-		// }
-//     });
-// )};
+
 	</script>
 
 	<?
@@ -113,6 +89,10 @@ else{
 		</form>
 	</div>
 </div>
+
+		<a href="">Create Events</a><br>
+		<a href="">My Events</a><br/>
+		<a href="">Wishlist</a><br>
 
 <?php
 }
